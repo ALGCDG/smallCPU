@@ -1,0 +1,12 @@
+instr[
+add
+xor
+or 
+and
+seq
+slt
+imm
+ifjump
+store
+move 
+]
