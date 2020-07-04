@@ -56,7 +56,7 @@ add $a
 imm 1
 ifjump \$a
 ###call \$a 
-\#calls a function, assuming arguments have been placed on stack
+\#calls a function, assuming arguments have been placed on stack (transparent appart from offset after call)
 imm \$a
 move acc off
 imm 1

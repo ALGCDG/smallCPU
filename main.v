@@ -63,6 +63,7 @@ module cpu(clk);
 			IMM: registers[0] <= {4'b0, immediate};
 			STORE: dataMemWrite <= 1;
 			MOVE: registers[moveArgA] <= registers[moveArgB];
+			IFJUMP: registers[0] <= programCounter + 4;
 			default: registers[0] <= result;
 		endcase
 	end
