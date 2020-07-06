@@ -63,6 +63,10 @@ imm 1
 ifjump 0
 imm 0
 move acc off
+###inv
+\# takes no argument, inverts bits in accumulator register
+###sub \$a
+\# subtracts value in $a from accumulator
 
 ## succ
 succ:
