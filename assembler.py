@@ -36,7 +36,7 @@ moveArgs = {
     'acc': 0,
     'stack': 3,
     'off': 1,
-    'offset': 1'
+    'offset': 1
 }
 
 N = 16
@@ -118,7 +118,7 @@ for i in atomic:
     if opcode(i).find(':') != -1:
         labels[opcode(i).split(':')[0]] = pc
     else:
-        binary += instruction(i)
+        binary += instruction(i) + '\n'
         pc += 4
 
 # write binary file

@@ -11,4 +11,9 @@ module memory(address, in, out, write_en, clk);
 		if (address == 0) out <= 0;
 		else out <= mem[address];
 	end
+	// load data file into memory
+	initial
+	begin
+		$readmemb("program.dat", mem);
+	end
 endmodule
