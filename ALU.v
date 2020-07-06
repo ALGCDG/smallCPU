@@ -3,6 +3,7 @@ module ALU #(parameter N = 16) (A, B, out, opcode, clk);
 	input [N-1:0] A, B;
 	input [3:0] opcode;
 	output reg [N-1:0] out;
+	initial out = 0;
 
 	parameter ADD = 4'd0;
 	parameter XOR = 4'd1;

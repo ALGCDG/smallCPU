@@ -48,8 +48,8 @@ module cpu(clk);
 
 	always @ (posedge clk)
 	begin
-        $display("Instruction: %d, Accumulator: %d", programCounter ,registers[0]);
-		programCounter <= (opcode == IFJUMP) ? programCounter + 1 : immediate+registers[1];
+        $display("PC: %d, Instruction: %b Accumulator: %d", programCounter, instr ,registers[0]);
+		programCounter <= (opcode != IFJUMP) ? programCounter + 1 : immediate+registers[1];
 		case (opcode)
 			IMM: registers[0] <= {4'b0, immediate};
 			STORE: dataMemWrite <= 1;
@@ -57,5 +57,6 @@ module cpu(clk);
 			IFJUMP: registers[0] <= programCounter + 1;
 			default: registers[0] <= result;
 		endcase
+        $display("PC: %d, Instruction: %b Accumulator: %d", programCounter, instr ,registers[0]);
 	end
 endmodule
