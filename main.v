@@ -1,36 +1,29 @@
 module cpu(clk);
 	parameter N = 16;
 	input clk;
-	// reg [N-1:0] accumulator;
-	// reg [N-1:0] offset;
-	// reg [N-1:0] stackPointer;
-	reg [N-1:0] programCounter;
-	// initial programCounter = 0x11111; // wherever instruction memory starts
+	reg [N-1:0] programCounter; // initial programCounter = 0x11111; // wherever instruction memory starts
 	reg [N-1:0] registers [2:0]; // combining all the registers
 	// registers[0] is the accumulator
 	// registers[1] is the offset register
 	// registers[2] is the stack pointer
-	// parameter ADD
-	// parameter AND
-	// parameter XOR
-	// parameter OR
-	// parameter SL
-	// parameter SR
-	parameter MOVE = 3;
-	parameter IMM = 2;
-	parameter IFJUMP = 1;
-	parameter STORE = 4;
-	// parameter STORE
 
+	initial programCounter = 0;
+	initial registers[0] = 0;
+	initial registers[1] = 0;
+	initial registers[2] = 0;
 
-	
-	// wire [N-1:0] instr; // write connects instruction memory with the cpu
-	// wire [3:0] opcode = instr[N-1:N-4];
-	// wire [N-5, 0] immediate = instr[N-5:0];
-	// wire [1:0] moveArgA = immediate[3:2];
-	// wire [1:0] moveArgB = immediate[1:0];
-	// wire [N-1:0] result; // wire connects ALU output to memory
-	// wire [N-1:0] address = {4'b0, instr[N-5:0]}; // remove top 4 bits which specify opcode
+	parameter ADD = 4'd0;
+	parameter XOR = 4'd1;
+	parameter OR = 4'd2;
+	parameter AND = 4'd3;
+	parameter SEQ = 4'd4;
+	parameter SLT = 4'd5;
+	parameter SL = 4'd6;
+	parameter SR = 4'd7;
+	parameter IMM = 4'd8;
+	parameter IFJUMP = 4'd9;
+	parameter STORE = 4'd10;
+	parameter MOVE = 4'd11;
 
 	wire [N-1:0] instr; // write connects instruction memory with the cpu
 	wire [3:0] opcode;
@@ -38,7 +31,6 @@ module cpu(clk);
 	wire [1:0] moveArgA;
 	wire [1:0] moveArgB;
 	wire [N-1:0] result; // wire connects ALU output to memory
-	wire [N-1:0] address; // remove top 4 bits which specify opcode
 	wire [N-1:0] data; // wire carries data from the memory to the ALU
 
 	reg dataMemWrite;
@@ -48,22 +40,21 @@ module cpu(clk);
 	assign immediate = instr[N-5:0];
 	assign moveArgA = immediate[3:2];
 	assign moveArgB = immediate[1:0];
-	assign address = {4'b0, instr[N-5:0]}; // remove top 4 bits which specify opcode
 
 	// seperate data and instruction memory blocks
-	memory dataMem(address+registers[1], registers[0], data, dataMemWrite, clk); //address, in, out, write_en, clk);
-	memory instMem(programCounter, 0, instr, 0, clk); // in address is kept at zero, so is write enable
-	ALU a(registers[0], data, result, opcode, clk);
+	memory #(N) dataMem (immediate+registers[1], registers[0], data, dataMemWrite, clk); //address, in, out, write_en, clk);
+	memory #(N) instMem (programCounter, 0, instr, 0, clk); // in address is kept at zero, so is write enable
+	ALU #(N) a(registers[0], data, result, opcode, clk);
 
 	always @ (posedge clk)
 	begin
-		programCounter <= (opcode == IFJUMP) ? programCounter + 4 : address;
-		registers[0] <= result;
+        $display("Instruction: %d, Accumulator: %d", programCounter ,registers[0]);
+		programCounter <= (opcode == IFJUMP) ? programCounter + 1 : immediate+registers[1];
 		case (opcode)
 			IMM: registers[0] <= {4'b0, immediate};
 			STORE: dataMemWrite <= 1;
 			MOVE: registers[moveArgA] <= registers[moveArgB];
-			IFJUMP: registers[0] <= programCounter + 4;
+			IFJUMP: registers[0] <= programCounter + 1;
 			default: registers[0] <= result;
 		endcase
 	end

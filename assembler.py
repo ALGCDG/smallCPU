@@ -1,4 +1,3 @@
-
 def str2int(s):
     if not s:
         return 0
@@ -65,6 +64,7 @@ def macro(line):
     def call(a):
         return [["imm", a], ["move", "acc", "off"], ["imm", "1"], ["ifjump", "0"], ["imm", "0"], ["move", "acc", "off"]]
     arg = parse(removeComment(line))
+    if arg == []: return arg
     if arg[0] == "load": return load(arg[1])
     elif arg[0] == "jump": return jump(arg[1])
     elif arg[0] == "call": return call(arg[1])

@@ -1,5 +1,5 @@
-module memory(address, in, out, write_en, clk);
-	parameter N = 16;
+module memory #(parameter N = 16) (address, in, out, write_en, clk);
+	// parameter N = 16;
 	input clk, write_en;
 	input [N-1:0] address;
 	input [N-1:0] in;

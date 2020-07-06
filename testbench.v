@@ -2,7 +2,7 @@ module testbench();
     // creating a regular clock
     reg clk;
     initial clk = 0;
-    always #5 clk = !clk;
+    always #1 clk = !clk;
     cpu c(clk);
 
     initial
