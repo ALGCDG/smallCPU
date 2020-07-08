@@ -4,10 +4,10 @@ The work as presented is meant to work with Icarus Verilog compilation and simul
 
 ## Instructions
 ### Arithmetic
-00 add \$a - acc := mem[a] + acc
-01 xor \$a - acc := mem[a] ^ acc
-02 or \$a - acc := mem[a] | acc
-03 and \$a - acc := mem[a] & acc
+00 add \$a - acc := mem[a] + acc\
+01 xor \$a - acc := mem[a] ^ acc\
+02 or \$a - acc := mem[a] | acc\
+03 and \$a - acc := mem[a] & acc\
 04 seq \$a\
 05 slt \$a\
 06 sl \$a\
