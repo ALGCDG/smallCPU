@@ -4,15 +4,15 @@ The work as presented is meant to work with Icarus Verilog compilation and simul
 
 ## Instructions
 ### Arithmetic
-00 add \$a
-01 xor \$a
-02 or \$a
-03 and \$a
-04 seq \$a
-05 slt \$a
-06 sl \$a
-07 sr \$a
-08 imm \$a - loads immediate 
+00 add \$a\
+01 xor \$a\
+02 or \$a\
+03 and \$a\
+04 seq \$a\
+05 slt \$a\
+06 sl \$a\
+07 sr \$a\
+08 imm \$a - loads immediate\ 
 ### Control
 09 ifjump \$a - if accumulator register is nonzero, stack pointer is set to address \$a, stores PC+4 in accumulator (NB there is no unconditional jump, must first imm 1 in order to achieve same result)
 ### Memory
