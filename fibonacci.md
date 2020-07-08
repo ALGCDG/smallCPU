@@ -68,6 +68,11 @@ move acc off
 ###sub \$a
 \# subtracts value in $a from accumulator
 
+## floating point
+We have 4 more opcodes to use
+fconv - converts between int and float
+fadd
+
 ## succ
 succ:
 move stack off
