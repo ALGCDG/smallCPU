@@ -1,4 +1,4 @@
-module memory #(parameter N = 16) (address, in, out, write_en, clk);
+module memory #(parameter N = 16, parameter M = 1024) (address, in, out, write_en, clk);
 	// parameter N = 16;
 	input clk, write_en;
 	input [N-1:0] address;
@@ -9,7 +9,7 @@ module memory #(parameter N = 16) (address, in, out, write_en, clk);
 	output [N-1:0] out;
 	assign out = (address == 0) ? 0 : mem[address];
 	
-	reg [N-1:0] mem [1023:0]; // defining a 1kxN block
+	reg [N-1:0] mem [M-1:0]; // defining a 1kxN block
 	always @ (posedge clk)
 	begin
 		if (write_en) mem[address] <= in;

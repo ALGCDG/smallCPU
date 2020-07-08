@@ -7,7 +7,7 @@ module cpu(clk);
 	// registers[1] is the offset register
 	// registers[2] is the stack pointer
 
-	initial programCounter = 0;
+	initial programCounter = 1;
 	initial registers[0] = 0;
 	initial registers[1] = 0;
 	initial registers[2] = 0;
@@ -42,13 +42,17 @@ module cpu(clk);
 	assign moveArgB = immediate[1:0];
 
 	// seperate data and instruction memory blocks
-	memory #(N) dataMem (immediate+registers[1], registers[0], data, dataMemWrite, clk); //address, in, out, write_en, clk);
-	memory #(N) instMem (programCounter, 0, instr, 0, clk); // in address is kept at zero, so is write enable
+	memory #(N, 1024) dataMem (immediate+registers[1], registers[0], data, dataMemWrite, clk); //address, in, out, write_en, clk);
+	memory #(N, 1024) instMem (programCounter, 0, instr, 0, clk); // in address is kept at zero, so is write enable
 	ALU #(N) a(registers[0], data, result, opcode, clk);
 
 	always @ (posedge clk)
 	begin
         $display("PC: %d, Instruction: %b Accumulator: %d", programCounter, instr ,registers[0]);
+		if (programCounter == 0) begin
+			$display("%d", data);
+			$finish();
+		end
 		programCounter <= (opcode != IFJUMP) ? programCounter + 1 : immediate+registers[1];
 		case (opcode)
 			IMM: registers[0] <= {4'b0, immediate};

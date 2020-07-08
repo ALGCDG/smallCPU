@@ -11,3 +11,4 @@ clean:
 	rm -f cpu
 	rm -f testbench
 	rm -f program.dat
+	rm -rf tmp
