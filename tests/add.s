@@ -1,4 +1,4 @@
-move offset stack
+# move offset stack
 imm 1
 store 0
 imm 2

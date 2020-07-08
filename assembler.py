@@ -113,7 +113,7 @@ import itertools
 atomic = itertools.chain.from_iterable(map(macro, instructions))
 
 # convert atomic instructions to binary representation
-binary = ""
+binary = "0"*N+'\n'
 for i in atomic:
     if opcode(i).find(':') != -1:
         labels[opcode(i).split(':')[0]] = pc
