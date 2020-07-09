@@ -87,8 +87,8 @@ def instruction(instr):
         binary = opField+argField
     elif len(instr)==3:
         assert op == "move", "move instruction takes two arguments"
-        argAField = bitstring(eval(instr[1]), 2)
-        argBField = bitstring(eval(instr[2]), 2)
+        argAField = bitstring(eval(instr[1]) if instr[1] not in moveArgs else moveArgs[instr[1]], 2)
+        argBField = bitstring(eval(instr[2]) if instr[2] not in moveArgs else moveArgs[instr[2]], 2)
         binary = opField+('0'*(N-8))+argAField+argBField
     return binary
 
