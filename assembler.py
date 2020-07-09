@@ -119,7 +119,7 @@ for i in atomic:
         labels[opcode(i).split(':')[0]] = pc
     else:
         binary += instruction(i) + '\n'
-        pc += 4
+        pc += 1
 
 # write binary file
 with open(targetName, 'w') as target:
