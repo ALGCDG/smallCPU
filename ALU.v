@@ -14,7 +14,10 @@ module ALU #(parameter N = 16) (A, B, out, opcode, clk);
 	parameter SL = 4'd6;
 	parameter SR = 4'd7;
 
-	always @ (posedge clk)
+	always @ (*)
+		begin
+		// $display("ALU op %0d", opcode);
+		// $display("ALU in %0d %0d, op %b", A, B, opcode);
 		case (opcode)
 			ADD: out <= A + B;
 			OR: out <= A | B;
@@ -24,6 +27,8 @@ module ALU #(parameter N = 16) (A, B, out, opcode, clk);
 			SR: out <= {A[N-1], A[N-1:1]};
 			SEQ: out <= A == B;
 			SLT: out <= A < B;
-			default: ; // if OP is not defined as parameter, do nothing
+			default: out <= out; // if OP is not defined as parameter, do nothing
 		endcase
+		// $display("ALU out %0d", out);
+		end
 endmodule

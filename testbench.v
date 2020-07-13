@@ -9,7 +9,7 @@ module testbench();
     initial
     begin
         $display("Running tinyCPU testbench...");
-        $monitor("Time: %t, Clock: %c", $time, clk);
+        // $monitor("Time: %0t, Clock: %b", $time, clk);
     end
 
     // initial begin

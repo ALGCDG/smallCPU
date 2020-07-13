@@ -1,6 +1,6 @@
 # move offset stack
 imm 1
-store 0
+store 1
 imm 2
-add 0 
+add 1 
 jump 0 # we expect the accumulator to hold value 3

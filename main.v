@@ -1,5 +1,6 @@
 module cpu(clk);
-	parameter N = 16;
+	parameter N = 16; // size of words in bits
+	parameter M = 1024; // size of memory in words
 	input clk;
 	reg [N-1:0] programCounter; // initial programCounter = 0x11111; // wherever instruction memory starts
 	reg [N-1:0] registers [2:0]; // combining all the registers
@@ -42,18 +43,21 @@ module cpu(clk);
 	assign moveArgB = immediate[1:0];
 
 	// seperate data and instruction memory blocks
-	memory #(N, 1024) dataMem (immediate+registers[1], registers[0], data, dataMemWrite, clk); //address, in, out, write_en, clk);
-	memory #(N, 1024) instMem (programCounter, 0, instr, 0, clk); // in address is kept at zero, so is write enable
+	memory #(N, M) dataMem (immediate+registers[1], registers[0], data, dataMemWrite, clk); //address, in, out, write_en, clk);
+	memory #(N, M) instMem (programCounter, 0, instr, 0, clk); // in address is kept at zero, so is write enable
 	ALU #(N) a(registers[0], data, result, opcode, clk);
+
 
 	always @ (posedge clk)
 	begin
-        $display("PC: %d, Instruction: %b Accumulator: %d", programCounter, instr ,registers[0]);
+        // $display("PC: %0d, Instruction: %b Accumulator: %0d, Offset: %0d, Stack Pointer: %0d", programCounter, instr ,registers[0], registers[1], registers[2]);
 		if (programCounter == 0) begin
-			$display("%d", data);
+			registers[1] = M-1;
+			$display("mem[%0d] = %0d",registers[1],data);
 			$finish();
 		end
 		programCounter <= (opcode != IFJUMP) ? programCounter + 1 : immediate+registers[1];
+		dataMemWrite <= 0;
 		case (opcode)
 			IMM: registers[0] <= {4'b0, immediate};
 			STORE: dataMemWrite <= 1;
@@ -61,6 +65,6 @@ module cpu(clk);
 			IFJUMP: registers[0] <= programCounter + 1;
 			default: registers[0] <= result;
 		endcase
-        $display("PC: %d, Instruction: %b Accumulator: %d", programCounter, instr ,registers[0]);
+        $display("PC: %0d, Instruction: %b Accumulator: %0d, Offset: %0d, Stack Pointer: %0d", programCounter, instr ,registers[0], registers[1], registers[2]);
 	end
 endmodule

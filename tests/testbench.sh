@@ -3,7 +3,7 @@
 # create tmp folder
 mkdir -p tmp
 # for each file in tests folder
-for t in ./tests/* ; do
+for t in ./tests/*.s ; do
     # find expected value for test (stored as comment on last line of test file)
     tail -n 1 $t | cut -c1- > tmp/expect.txt
     # assemble dat file from source to dat
@@ -11,7 +11,7 @@ for t in ./tests/* ; do
     echo $t
     python3 assembler.py $t program.dat
     # run vvp testbench
-    vvp testbench > tmp/out.txt
+    vvp testbench | tail -n 1 > tmp/out.txt
     # compare result and 
     diff tmp/out.txt tmp/expect.txt
     if [[ $? == 0 ]] ; then

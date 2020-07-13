@@ -10,11 +10,15 @@ module memory #(parameter N = 16, parameter M = 1024) (address, in, out, write_e
 	assign out = (address == 0) ? 0 : mem[address];
 	
 	reg [N-1:0] mem [M-1:0]; // defining a 1kxN block
-	always @ (posedge clk)
+	always @ (posedge write_en)
 	begin
-		if (write_en) mem[address] <= in;
+		if (write_en) begin
+			mem[address] <= in;
+			$display("mem[%0d] == %0d", address, in);
+		end
 		// if (address == 0) out <= 0;
 		// else out <= mem[address];
+		// out <= mem[address];
 	end
 	// load data file into memory
 	initial
