@@ -56,13 +56,13 @@ module cpu(clk);
 			// $display("mem[%0d] = %0d",registers[1],data);
 			$finish();
 		end
-		programCounter <= (opcode != IFJUMP) ? programCounter + 1 : immediate+registers[1];
+		programCounter <= (opcode == IFJUMP && registers[0]) ? immediate+registers[1] : programCounter + 1 ;
 		dataMemWrite <= 0;
 		case (opcode)
 			IMM: registers[0] <= {4'b0, immediate};
 			STORE: dataMemWrite <= 1;
 			MOVE: registers[moveArgA] <= registers[moveArgB];
-			IFJUMP: registers[0] <= programCounter + 1;
+			IFJUMP: if (registers[0]) registers[0] <= programCounter + 1;
 			default: registers[0] <= result;
 		endcase
         $display("PC: %0d, Instruction: %b Accumulator: %0d, Offset: %0d, Stack Pointer: %0d", programCounter, instr ,registers[0], registers[1], registers[2]);

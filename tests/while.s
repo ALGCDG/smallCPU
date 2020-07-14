@@ -1,4 +1,4 @@
-# implementing a loop which counts from 0 to 9
+# implementing a loop which counts from 0 to 10
 imm 0
 store 1
 imm 1
@@ -11,5 +11,7 @@ add 2
 store 1
 slt 3
 ifjump looptop
+load 1
+move stack acc
 jump 0
-#Stack Pointer: 9
+#Stack Pointer: 10

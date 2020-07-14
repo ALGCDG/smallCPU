@@ -116,7 +116,7 @@ atomic = itertools.chain.from_iterable(map(macro, instructions))
 binary = "0"*N+'\n'
 for i in atomic:
     if opcode(i).find(':') != -1:
-        labels[opcode(i).split(':')[0]] = pc
+        labels[opcode(i).split(':')[0]] = pc+1
     else:
         binary += instruction(i) + '\n'
         pc += 1
