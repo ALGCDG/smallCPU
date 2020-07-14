@@ -23,8 +23,8 @@ module ALU #(parameter N = 16) (A, B, out, opcode, clk);
 			OR: out <= A | B;
 			AND: out <= A & B;
 			XOR: out <= A ^ B;
-			SL: out <= {A[N-2:1], 1'b0};
-			SR: out <= {A[N-1], A[N-1:1]};
+			SL: out <= A << B; //{A[N-2:1], B'b0};
+			SR: out <= A >>> B; // signed shift right {A[N-1], A[N-1:1]};
 			SEQ: out <= A == B;
 			SLT: out <= A < B;
 			default: out <= out; // if OP is not defined as parameter, do nothing
