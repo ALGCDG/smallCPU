@@ -33,7 +33,7 @@ opcodes = {
 
 moveArgs = {
     'acc': 0,
-    'stack': 3,
+    'stack': 2,
     'off': 1,
     'offset': 1
 }

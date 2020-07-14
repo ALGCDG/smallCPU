@@ -52,8 +52,8 @@ module cpu(clk);
 	begin
         // $display("PC: %0d, Instruction: %b Accumulator: %0d, Offset: %0d, Stack Pointer: %0d", programCounter, instr ,registers[0], registers[1], registers[2]);
 		if (programCounter == 0) begin
-			registers[1] = M-1;
-			$display("mem[%0d] = %0d",registers[1],data);
+			// registers[1] = M-1;
+			// $display("mem[%0d] = %0d",registers[1],data);
 			$finish();
 		end
 		programCounter <= (opcode != IFJUMP) ? programCounter + 1 : immediate+registers[1];
