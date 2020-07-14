@@ -11,6 +11,10 @@ for t in ./tests/*.s ; do
     printf $t
     printf " => "
     python3 assembler.py $t program.dat
+    if [[ $? != 0 ]] ; then
+        echo "Assembler Error"
+	continue
+    fi
     # run vvp testbench
     vvp testbench | tail -n 1 | grep -o '\<Stack Pointer: .*\>' > tmp/out.txt
     # compare result and 

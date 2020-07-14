@@ -8,3 +8,4 @@ move acc off
 imm 0
 move off acc
 jump 0 # we expect the accumulator to hold value 3
+#Stack Pointer: 31
