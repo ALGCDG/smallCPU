@@ -8,15 +8,17 @@ The work as presented is meant to work with Icarus Verilog compilation and simul
 01 xor \$a - acc := mem[a] ^ acc\
 02 or \$a - acc := mem[a] | acc\
 03 and \$a - acc := mem[a] & acc\
-04 seq \$a\
-05 slt \$a\
-06 sl \$a\
-07 sr \$a\
-08 imm \$a - loads immediate\
+04 seq \$a - acc := acc = mem[a]\
+05 slt \$a - acc := acc < mem[a]\
+06 sl \$a - acc := acc << mem[a]\
+07 sr \$a - acc := acc >>> mem[a]\
+08 imm \$a - acc := a\
 ### Control
-09 ifjump \$a - if accumulator register is nonzero, stack pointer is set to address \$a, stores PC+4 in accumulator (NB there is no unconditional jump, must first imm 1 in order to achieve same result)
+09 ifjump \$a - pc := a if acc else pc + 1
+if accumulator register is nonzero, stack pointer is set to address \$a, stores PC+4 in accumulator (NB there is no unconditional jump, must first imm 1 in order to achieve same result)
 ### Memory
-10 store \$a - stores word from accumulator to address \$a
+10 store \$a - mem[a] := acc\
+ stores word from accumulator to address \$a
 11 move \$a1 \$a2- moves between stack register, accumulator register and memory offset register
 
 ## Macros
