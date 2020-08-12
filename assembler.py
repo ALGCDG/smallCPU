@@ -13,7 +13,8 @@ def bitstring(i, l):
             return ''
         else:
             return int2str(i>>1) + ('1' if i&1 else '0')
-    sig = int2str(i)
+    w = i if i >= 0 else abs(i)-1
+    sig = int2str(w)
     return '0'*(l-len(sig)) + sig
     
 opcodes = {

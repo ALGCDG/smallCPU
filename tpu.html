@@ -1,0 +1,33 @@
+<h2>Architecture</h2>
+<img src="tinyCPU.svg" alt="Architectural diagram">
+<h2>Instruction Set</h2>
+There are only 12 instructions, each represented by a 4 bit opcode.
+<table style="width:100%">
+    <tr>
+        <th>opcode</th>
+        <th>instruction</th>
+        <th>behaviour</th>
+    </tr>
+    <tr> <th>00</th> <th>add $a</th>         <th>acc := mem[a] + acc</th></tr>
+    <tr> <th>01</th> <th>xor $a</th>         <th>acc := mem[a] ^ acc</th></tr>
+    <tr> <th>02</th> <th>or $a</th>          <th>acc := mem[a] | acc</th></tr>
+    <tr> <th>03</th> <th>and $a</th>         <th>acc := mem[a] & acc</th></tr>
+    <tr> <th>04</th> <th>seq $a</th>         <th>acc := acc = mem[a]</th></tr>
+    <tr> <th>05</th> <th>slt $a</th>         <th>acc := acc < mem[a]</th></tr>
+    <tr> <th>06</th> <th>sl $a</th>          <th>acc :=acc << mem[a]</th></tr>
+    <tr> <th>07</th> <th>sr $a</th>          <th>acc :=acc >>> mem[a]</th></tr>
+    <tr> <th>08</th> <th>imm $a</th>         <th>acc := a</th></tr>
+    <tr> <th>09</th> <th>ifjump $a</th>      <th>pc := a if acc else pc + 1</th></tr>
+    <tr> <th>10</th> <th>store $a</th>       <th>mem[a] := acc</th></tr>
+    <tr> <th>11</th> <th>move $a1 $a2</th>   <th>mem[a] := acc</th></tr>
+</table>
+
+This is supplemented by several macros.
+
+<h2>Further</h2>
+
+There are several more things worth exploring:
+- I am working on a floating point coprocessor to augment this.
+- given the accumulator structure, the process is heavily dependant on memory, so maybe add data cache.
+- to implementing on a real fpga.
+- implment memory mapped (mapped through data) devices (video 640 by 480, getchar, putchar, etc)

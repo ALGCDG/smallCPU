@@ -41,3 +41,30 @@ move acc off
 \# takes no argument, inverts bits in accumulator register
 ### sub \$a
 \# subtracts value in $a from accumulator
+
+## Structure
+
+Seperate instruction and data memory.
+Accumulator Architecture.
+
+## Simulation
+To simulate the processor, icarus Verilog is required.
+
+To build the simulation
+`make cpu`
+
+To run the simulation
+`vvp cpu`
+
+the instruction memory can be specified using a plain text file "program.dat" storing character representations of the binary
+
+to test the processor
+
+`make testbench`
+`make test`
+
+## Assembler
+
+The assembler is a python3 script, assembler.py, which takes two arguments
+
+`python3 assembler.py sourcefile.s program.dat`
