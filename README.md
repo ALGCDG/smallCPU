@@ -1,7 +1,7 @@
-tinyCPU is a simple accumulator CPU, implemented in verilog.
-
-The work as presented is meant to work with Icarus Verilog compilation and simulation.
-
+Small Processing Unit (SPU) is a simple accumulator processor, implemented in verilog.
+The contents of teh repository are is teh hardware specification written in iverliog, a testbench, and an assembler written in python.
+It uses very few instructions (12), but those are supplimented by several macros for ease of use.
+The instruction/word size used by SPU can be easily changed (so long as it is greater than 4).
 ## Instructions
 ### Arithmetic
 00 add \$a - acc := mem[a] + acc\
