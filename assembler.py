@@ -1,4 +1,10 @@
+import sys # we use this to get commandline arguments
+import itertools
+
 def str2int(s):
+    """
+    converts binary string (big endian) to an int
+    """
     if not s:
         return 0
     else:
@@ -16,7 +22,8 @@ def bitstring(i, l):
     w = i if i >= 0 else abs(i)-1
     sig = int2str(w)
     return '0'*(l-len(sig)) + sig
-    
+
+# map of opcode to numerical representation
 opcodes = {
     'add': 0,
     'xor': 1,
@@ -39,16 +46,15 @@ moveArgs = {
     'offset': 1
 }
 
-N = 16
+N = 16 # specifies instruction length as 16 bits
+
+# as we go through the assembly we must make notes of labels
 pc = 0
 labels = {}
 
-
-#
 def opcode(instr): return instr[0]
 def arg(instr): return instr[1]
 
-# def process(line): 
 def removeComment(line): return line.split('#')[0]
 def parse(line): return [ p for p in line.strip().split(" ") if p != '' ]
 def isLabel(line): return removeComment(line).find(':') != -1
@@ -72,12 +78,17 @@ def macro(line):
     else: return [arg]
 
 def arg(s):
-    if s in labels: return labels[s]
-    else: return eval(s)
+    """
+    takes argument string (s) and returns int
+    """
+    if s in labels:
+        return labels[s]
+    else:
+        return eval(s)
 
 def instruction(instr):
     """
-    returns the binary representation of an instruction
+    returns a binary string representation of an instruction
     """
     op = opcode(instr)
     opField = bitstring(opcodes[op], 4)
@@ -98,7 +109,6 @@ def chunksof(n):
     return _chunksof
 
 # MAIN
-import sys
 
 # process command line arguments
 assert len(sys.argv)>=2, "Source file must be specified"
@@ -110,7 +120,6 @@ with open(sourceName) as source:
     instructions = map(lambda x: removeComment(x.lower()).strip(), source.readlines())
 
 # convert macro instructions to atomic instructions
-import itertools
 atomic = itertools.chain.from_iterable(map(macro, instructions))
 
 # convert atomic instructions to binary representation

@@ -1,3 +1,9 @@
+<h1>Small Processing Unit</h1>
+Small Processing Unit (SPU) is a accumulator based processing unit written in (i)verilog.
+The processor is implemented so that the word size of the processor can be changed by simply editing one line in the verilog file (any number of bits greater than 4)
+Only 12 basic instructions
+Source: LINK
+
 <h2>Architecture</h2>
 <img src="tinyCPU.svg" alt="Architectural diagram">
 <h2>Instruction Set</h2>
@@ -24,10 +30,21 @@ There are only 12 instructions, each represented by a 4 bit opcode.
 
 This is supplemented by several macros.
 
+<table style="width:100%">
+    <tr>
+        <th>macro</th>
+        <th>behaviour</th>
+    </tr>
+    <tr> <th>load $a</th>         <th>acc := mem[a]</th></tr>
+    <tr> <th>jump $a</th>         <th>pc := a</th></tr>
+    <tr> <th>call $a</th>         <th>acc := mem[a] | acc</th></tr>
+</table>
+
+
 <h2>Further</h2>
 
 There are several more things worth exploring:
-- I am working on a floating point coprocessor to augment this.
-- given the accumulator structure, the process is heavily dependant on memory, so maybe add data cache.
-- to implementing on a real fpga.
-- implment memory mapped (mapped through data) devices (video 640 by 480, getchar, putchar, etc)
+<br>- I am working on a floating point coprocessor to augment this. LINK.
+<br>- given the accumulator structure, the process is heavily dependant on memory, so maybe add data cache.
+<br>- to implementing on a real fpga.
+<br>- implment memory mapped (mapped through data) devices (video 640 by 480, getchar, putchar, etc)
