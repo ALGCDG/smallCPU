@@ -1,18 +1,24 @@
+<html>
+<head>
+    <title>SPU</title>
+</head>
+<body>
 <h1>Small Processing Unit</h1>
-Small Processing Unit (SPU) is a accumulator based processing unit written in (i)verilog.
+Small Processing Unit (SPU) is a accumulator based processing unit written in (I)verilog.
 The processor is implemented so that the word size of the processor can be changed by simply editing one line in the verilog file (any number of bits greater than 4)
-Only 12 basic instructions
-Source: LINK
+Only 12 basic instructions.
+<br>
+[<a href="https://github.com/ALGCDG/smallCPU">Source</a>]
 
 <h2>Architecture</h2>
-<img src="tinyCPU.svg" alt="Architectural diagram">
+<img src="tinyCPU.svg" alt="Architectural diagram" style="width:100%">
 <h2>Instruction Set</h2>
 There are only 12 instructions, each represented by a 4 bit opcode.
 <table style="width:100%">
     <tr>
-        <th>opcode</th>
-        <th>instruction</th>
-        <th>behaviour</th>
+        <th style="border: 1px solid black">opcode</th>
+        <th style="border: 1px solid black">instruction</th>
+        <th style="border: 1px solid black">behaviour</th>
     </tr>
     <tr> <th>00</th> <th>add $a</th>         <th>acc := mem[a] + acc</th></tr>
     <tr> <th>01</th> <th>xor $a</th>         <th>acc := mem[a] ^ acc</th></tr>
@@ -25,26 +31,31 @@ There are only 12 instructions, each represented by a 4 bit opcode.
     <tr> <th>08</th> <th>imm $a</th>         <th>acc := a</th></tr>
     <tr> <th>09</th> <th>ifjump $a</th>      <th>pc := a if acc else pc + 1</th></tr>
     <tr> <th>10</th> <th>store $a</th>       <th>mem[a] := acc</th></tr>
-    <tr> <th>11</th> <th>move $a1 $a2</th>   <th>mem[a] := acc</th></tr>
+    <tr> <th>11</th> <th>move $a1 $a2</th>   <th>a2 := a1</th></tr>
 </table>
-
+<br><br>
 This is supplemented by several macros.
 
 <table style="width:100%">
     <tr>
-        <th>macro</th>
-        <th>behaviour</th>
+        <th style="border: 1px solid black">macro</th>
+        <th style="border: 1px solid black">behaviour</th>
     </tr>
     <tr> <th>load $a</th>         <th>acc := mem[a]</th></tr>
     <tr> <th>jump $a</th>         <th>pc := a</th></tr>
     <tr> <th>call $a</th>         <th>acc := mem[a] | acc</th></tr>
+    <tr> <th>TODO inv $a</th>         <th>acc := mem[a] | acc</th></tr>
+    <tr> <th>TODO mult $a</th>         <th>acc := mem[a] | acc</th></tr>
+    <tr> <th>TODO sub $a</th>         <th>acc := mem[a] | acc</th></tr>
 </table>
 
 
 <h2>Further</h2>
 
 There are several more things worth exploring:
-<br>- I am working on a floating point coprocessor to augment this. LINK.
-<br>- given the accumulator structure, the process is heavily dependant on memory, so maybe add data cache.
-<br>- to implementing on a real fpga.
+<br>- I am working on a floating point coprocessor to augment the SPU.
+<br>- Given the accumulator structure, the process is heavily dependant on memory. In the future I might add data/instruction memory caches to exploit temporal and spacial locality.
+<br>- I would like to implement the SPU on a FPGA.
 <br>- implment memory mapped (mapped through data) devices (video 640 by 480, getchar, putchar, etc)
+</body>
+</html>
